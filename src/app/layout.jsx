@@ -3,6 +3,7 @@ import "./globals.css";
 import '@mantine/core/styles.css';
 import { MantineProvider } from "@mantine/core";
 import Navbar from "@/Components/Navbar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <MantineProvider>
           <Navbar />
+          <Toaster position="top-right"/>
           {children}
         </MantineProvider>
       </body>
