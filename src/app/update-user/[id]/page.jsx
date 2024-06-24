@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
 
 const UpdateUser = () => {
 
@@ -28,6 +29,17 @@ const UpdateUser = () => {
 
   const submitForm = (values) => {
     console.log(values);
+
+    axios.put('http://localhost:5000/user/update/'+id, values)
+    .then((result) => {
+      if(result.status === 200){
+        toast.success('User Updated Successfully');
+      }
+      
+    }).catch((err) => {
+      toast.error('Failed to update user');
+      console.log(err);
+    });
   }
   
   return (
@@ -75,7 +87,7 @@ const UpdateUser = () => {
                   type="text"
                   className='bold w-full mt-1 mb-3 py-2 px-3 rounded-md outline-none border-2' />
 
-                <button className='my-5 py-3 px-5 bg-pink-600 text-white rounded-lg'>Submit</button>
+                <button type='submit' className='my-5 py-3 px-5 bg-pink-600 text-white rounded-lg'>Submit</button>
 
               </form>
             }
