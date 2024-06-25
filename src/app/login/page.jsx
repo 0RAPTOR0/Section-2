@@ -1,17 +1,40 @@
 'use client'
+import axios from 'axios';
 import { useFormik } from 'formik'
 import React from 'react'
+import toast from 'react-hot-toast';
 
 const Login = () => {
 
     const loginForm = useFormik({
         initialValues: {
             email: '',
-            password:''
+            password: ''
         },
         onSubmit: (values) => {
             console.log(values);
+
+            axios.post('http://localhost:5000/user/authenticate', values)
+                .then((result) => {
+                    console.log(result.status);
+                    console.log(result.data);
+
+                    if (result.status === 200) {
+                        toast.success('Login SUCCESSFULLY')
+                    }
+
+
+                }).catch((err) => {
+                    console.log(err);
+                    if (err.response.status === 401) {
+                        toast.error('Failed to login')
+                    } else {
+                        toast.error('Failed to login')
+                    }
+                });
+
         }
+
     });
 
     return (
