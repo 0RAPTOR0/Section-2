@@ -1,10 +1,16 @@
 'use client'
+import useAppContext from '@/context/AppContext';
 import axios from 'axios';
 import { useFormik } from 'formik'
+import { useRouter } from 'next/navigation';
 import React from 'react'
 import toast from 'react-hot-toast';
 
 const Login = () => {
+
+    const router = useRouter();
+
+    const { setLoggedIn, setCurrentUser } = useAppContext();
 
     const loginForm = useFormik({
         initialValues: {
@@ -12,7 +18,7 @@ const Login = () => {
             password: ''
         },
         onSubmit: (values) => {
-            console.log(values);
+            //console.log(values);           for not showing password
 
             axios.post('http://localhost:5000/user/authenticate', values)
                 .then((result) => {
@@ -21,6 +27,10 @@ const Login = () => {
 
                     if (result.status === 200) {
                         toast.success('Login SUCCESSFULLY')
+
+                        localStorage.setItem( 'user', JSON.stringify(result.data));
+                        document.cookie = `token=${result.data.token}`;
+                        router.push('/manage-users')
                     }
 
 
