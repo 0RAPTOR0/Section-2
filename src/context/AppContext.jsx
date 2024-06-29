@@ -1,5 +1,6 @@
 'use client'
-import { createContext, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createContext, useContext, useState } from "react";
 
 const AppContext = createContext();
 
@@ -29,7 +30,7 @@ export const AppProvider = ({children}) => {
         setLoggedIn,
         logout
     }}>
-        {childeren}
+        {children}
     </AppContext.Provider>
 
 }

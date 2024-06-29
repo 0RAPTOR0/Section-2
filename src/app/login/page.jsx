@@ -30,6 +30,10 @@ const Login = () => {
 
                         localStorage.setItem( 'user', JSON.stringify(result.data));
                         document.cookie = `token=${result.data.token}`;
+
+                        setCurrentUser(result.data);
+                        setLoggedIn(true);
+                        
                         router.push('/manage-users')
                     }
 
